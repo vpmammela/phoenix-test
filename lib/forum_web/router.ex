@@ -20,10 +20,12 @@ defmodule ForumWeb.Router do
     get "/", PageController, :home
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", ForumWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", ForumWeb do
+    pipe_through :api
+
+    resources "/posts", PostController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:forum, :dev_routes) do
